@@ -34,27 +34,27 @@ class Menu extends Phaser.Scene {
         });
         this.input.keyboard.on('keydown_RIGHT', () => {
             this.sound.pauseAll();
-            this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Play');
         });
         this.input.keyboard.on('keydown_LEFT', () => {
             this.sound.pauseAll();
-            this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Play');
         });
         this.input.keyboard.on('keydown_UP', () => {
             this.sound.pauseAll();
-            this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Play');
         });
         this.input.keyboard.on('keydown_DOWN', () => {
             this.sound.pauseAll();
-            this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Play');
         });
         this.input.keyboard.on('keydown_ENTER', () => {
             this.sound.pauseAll();
-            this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Play');
         });
         this.input.on('pointerdown', () => {
             this.sound.pauseAll();
-            this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Play');
         });
     }
 }
