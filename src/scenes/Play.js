@@ -207,8 +207,8 @@ class Play extends Phaser.Scene {
        
 
 
-        this.tio.setSize(20, 45);
-        this.tio.setOffset(5, 20);
+        this.tio.setSize(17, 45);
+        this.tio.setOffset(8, 20);
         this.coche.setSize(20, 45);
         this.coche.setOffset(70, 15);
 
@@ -261,29 +261,29 @@ class Play extends Phaser.Scene {
                 this.tio.body.setVelocityX(-210);
                 this.tio.flipX = true;
                 this.tio.anims.play('walk', true);
-                this.tio.setSize(20, 45);
-                this.tio.setOffset(5, 20);
+                this.tio.setSize(17, 45);
+                this.tio.setOffset(8, 20);
             } else if ((this.cursor.right.isDown || this.derecha.isDown)) {
                 this.tio.body.setVelocityX(210);
                 this.tio.flipX = false;
                 this.tio.anims.play('walk', true);
-                this.tio.setSize(20, 45);
-                this.tio.setOffset(5, 20);
+                this.tio.setSize(17, 45);
+                this.tio.setOffset(8, 20);
             } else if ((this.cursor.up.isDown || this.salto.isDown)) {
                 this.tio.body.setVelocityY(-300);
                 this.tio.anims.play('jump', true);
-                this.tio.setSize(20, 45);
-                this.tio.setOffset(5, 20);
+                this.tio.setSize(17, 45);
+                this.tio.setOffset(8, 20);
             } else if ((this.cursor.down.isDown || this.abajo.isDown)) {
                 this.tio.body.setVelocityX(0);
                 this.tio.anims.play("crouch", true);
-                this.tio.setSize(20, 30);
-                this.tio.setOffset(5, 35);
+                this.tio.setSize(17, 30);
+                this.tio.setOffset(8, 35);
             } else {
                 this.tio.setVelocityX(0);
                 this.tio.anims.play('idle', true);
-                this.tio.setSize(20, 45);
-                this.tio.setOffset(5, 20);
+                this.tio.setSize(17, 45);
+                this.tio.setOffset(8, 20);
             }
         } else {
             if ((this.cursor.left.isDown || this.izquierda.isDown)) {
