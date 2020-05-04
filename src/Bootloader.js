@@ -26,6 +26,10 @@ class Bootloader extends Phaser.Scene {
             frameWidth:32,
             frameHeight:32
         });
+        this.load.spritesheet("pincho2","Monedas/pincho2.png",{
+            frameWidth:32,
+            frameHeight:32
+        });
 
         this.load.audio('fondo', 'Audio/musica_nivel1.mp3');
         this.load.audio('menu_audio', 'Audio/musica_menu.mp3')
