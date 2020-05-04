@@ -93,7 +93,7 @@ class Play extends Phaser.Scene {
             if (tile.index == 35) {
                 var x = tile.getCenterX();
                 var y = tile.getCenterY();
-                const spike = this.spikeGroup.create(x, y, "pincho", 0);
+                var spike = this.spikeGroup.create(x, y, "pincho", 0);
                 spike.anims.play("pinchar", true);
                 layer.removeTileAt(tile.x, tile.y);
                 spike.setScale(1.5);
@@ -105,7 +105,7 @@ class Play extends Phaser.Scene {
              if (tile.index == 36) {
                  var x = tile.getCenterX();
                  var y = tile.getCenterY();
-                 const spike = this.spikeGroup.create(x, y, "pincho2", 0);
+                var spike = this.spikeGroup.create(x, y, "pincho2", 0);
                  spike.anims.play("pinchar2", true);
                  layer.removeTileAt(tile.x, tile.y);
                  spike.setScale(1.5);
