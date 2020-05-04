@@ -21,7 +21,7 @@ const config = {
             gravity: {
                 y: 300,
             },
-             debug: true
+             /* debug: true */
         }
     },
     scene: [
