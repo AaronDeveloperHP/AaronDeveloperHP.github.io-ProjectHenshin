@@ -198,7 +198,7 @@ class Play extends Phaser.Scene {
         //funcion que se llama al tocar una moneda
         function collect(a, b) {
             b.destroy();
-            this.money.play(0.3);
+            this.money.play();
             this.score = this.score + 10;
             this.score2.setText(this.score);
 
