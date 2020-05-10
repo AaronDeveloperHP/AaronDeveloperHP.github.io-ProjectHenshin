@@ -4,10 +4,16 @@ class Bootloader extends Phaser.Scene {
     }
 
     preload() {
-        console.log('Soy Bootloader');
-
+     
         this.load.setPath('./assets/');
+        this.load.image('wasd', 'Iconos/teclas_wasd.png');
+        this.load.image('direcciones', 'Iconos/teclas_direcciones.png');
+        this.load.image('story1', 'Fondos/Story_pantalla.png');
+        this.load.image('fatality', 'Fondos/gameOver_pantalla.png');
+        this.load.image('controles', 'Fondos/Controls_pantalla.png');
         this.load.image('nivel', 'Fondos/primer_nivel.png');
+        this.load.image('flecha', 'Monedas/flecha.png');
+        this.load.image('centro', 'Monedas/centro.png');
         this.load.image('menu', 'Fondos/menu.jpg')
         this.load.image('movil', 'Plataformas/movil.png')
         this.load.image('ascensor', 'Plataformas/ascensor.png')
@@ -32,7 +38,12 @@ class Bootloader extends Phaser.Scene {
         });
 
         this.load.audio('fondo', 'Audio/musica_nivel1.mp3');
-        this.load.audio('menu_audio', 'Audio/musica_menu.mp3')
+        this.load.audio('menu_audio', 'Audio/musica_menu.mp3');
+        this.load.audio('laser', 'Audio/laser.mp3');
+        this.load.audio('salto', 'Audio/salto.wav');
+        this.load.audio('moneda', 'Audio/moneda_sonido.wav');
+        this.load.audio('death', 'Audio/musica_gameOver.mp3');
+        this.load.audio('historia', 'Audio/musica_story.mp3');
 
         this.load.spritesheet('tio','Jugador/sprite_tio.png',{
             frameWidth:32,

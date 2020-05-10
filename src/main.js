@@ -1,7 +1,10 @@
 import Bootloader from './Bootloader.js';
 import Menu from './scenes/Menu.js';
 import Play from './scenes/Play.js';
-
+import Story from './scenes/Story.js';
+import Story2 from './scenes/Story2.js';
+import Controls from './scenes/Controls.js';
+import GameOver from './scenes/GameOver.js';
 const config = {
     title: "primeraPrueba",
     version: "0.0.1",
@@ -26,8 +29,12 @@ const config = {
     },
     scene: [
         Bootloader,
-        Menu,
-        Play
+        Menu, 
+        Story,
+        Story2,
+        Controls,
+        Play,
+        GameOver
     ]
 };
 
