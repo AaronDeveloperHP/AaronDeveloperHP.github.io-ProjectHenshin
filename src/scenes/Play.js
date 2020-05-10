@@ -4,6 +4,26 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+
+        var mobile = {
+            Android: function () {
+                return navigator.userAgent.match(/Android/i);
+            },
+            IOS: function () {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function () {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function () {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function () {
+                return navigator.userAgent.match(mobile.Android() || mobile.IOS() || mobile.Opera() || mobile.Windows());
+            }
+        }
+
+
         //Animaciones
         this.anims.create({
             key: 'walk',
@@ -56,6 +76,9 @@ class Play extends Phaser.Scene {
         this.fondo = this.add.image(0, -2345, 'nivel').setScale(3.15).setOrigin(0, 0);
         this.backgroundMusic2 = this.sound.add('fondo', { loop: true });
         this.backgroundMusic2.play({ volume: 0.5 });
+        this.money = this.sound.add('moneda', { loop: false });
+        this.jump = this.sound.add('salto', { loop: false });
+
 
         var check = 0;
         const mapa = this.make.tilemap({ key: 'mapa' });
@@ -86,7 +109,7 @@ class Play extends Phaser.Scene {
             }
         });
         this.physics.add.overlap(this.tio, this.coinsGroup, collect, null, this);
-      
+
         //Pinchos de suelo
         this.spikeGroup = this.physics.add.staticGroup();
         layer.forEachTile(tile => {
@@ -100,18 +123,18 @@ class Play extends Phaser.Scene {
             }
         });
 
-         //Pinchos de techo
-         layer.forEachTile(tile => {
-             if (tile.index == 36) {
-                 var x = tile.getCenterX();
-                 var y = tile.getCenterY();
+        //Pinchos de techo
+        layer.forEachTile(tile => {
+            if (tile.index == 36) {
+                var x = tile.getCenterX();
+                var y = tile.getCenterY();
                 var spike = this.spikeGroup.create(x, y, "pincho2", 0);
-                 spike.anims.play("pinchar2", true);
-                 layer.removeTileAt(tile.x, tile.y);
-                 spike.setScale(1.5);
-             }
-         });
-         this.physics.add.collider(this.tio, this.spikeGroup, damage, null, this);
+                spike.anims.play("pinchar2", true);
+                layer.removeTileAt(tile.x, tile.y);
+                spike.setScale(1.5);
+            }
+        });
+        this.physics.add.collider(this.tio, this.spikeGroup, damage, null, this);
         //Plataformas moviles horizontales
         this.movibleX = this.physics.add.group();
         layer.forEachTile(tile => {
@@ -120,7 +143,7 @@ class Play extends Phaser.Scene {
                 var y = tile.getCenterY();
                 var movil = this.movibleX.create(x, y, "movil");
                 movil.setImmovable(true);
-                movil.setGravityY(-300); 
+                movil.setGravityY(-300);
                 movil.setScale(3, 0.5);
                 movil.setBounceX(1);
                 movil.setVelocityX(200);
@@ -138,7 +161,7 @@ class Play extends Phaser.Scene {
                 var x = tile.getCenterX();
                 var y = tile.getCenterY();
                 var ascensor = this.movibleY.create(x, y, "ascensor");
-               ascensor.setImmovable(true);
+                ascensor.setImmovable(true);
                 ascensor.setGravityY(-300);
                 ascensor.setScale(1.5, 1);
                 ascensor.setBounce(1);
@@ -147,10 +170,10 @@ class Play extends Phaser.Scene {
                 layer.removeTileAt(tile.x, tile.y);
                 tile.setCollision(true);
             }
-        });    
+        });
         this.physics.add.collider(this.tio, this.movibleY);
-        
-    //funcion que se llama al tocar un pincho
+
+        //funcion que se llama al tocar un pincho
         this.life = 3;
         function damage(a, b) {
             this.cosa = this.life;
@@ -175,6 +198,7 @@ class Play extends Phaser.Scene {
         //funcion que se llama al tocar una moneda
         function collect(a, b) {
             b.destroy();
+            this.money.play(0.3);
             this.score = this.score + 10;
             this.score2.setText(this.score);
 
@@ -204,7 +228,6 @@ class Play extends Phaser.Scene {
         this.volumeUp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         this.volumeDown = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
-       
 
 
         this.tio.setSize(17, 45);
@@ -212,7 +235,21 @@ class Play extends Phaser.Scene {
         this.coche.setSize(20, 45);
         this.coche.setOffset(70, 15);
 
-        this.physics.add.collider(this.tio, this.coche, chocaPala, null, this);
+        this.physics.add.collider(this.tio, this.coche, Win, null, this);
+        if (mobile.any() != null) {
+            this.pad_izquierda = this.add.image((this.fondo.width / 32) * 1.5, (this.fondo.height / 32) * 18, 'flecha').setScale(3).setAlpha(.65).setScrollFactor(0).setInteractive();
+            this.pad_izquierda.name="izquierda";
+
+            this.pad_derecha = this.add.image((this.fondo.width / 32) * 4, (this.fondo.height / 32) * 18, 'flecha').setScale(3).setAlpha(.65).setAngle(180).setScrollFactor(0).setInteractive();
+            this.pad_izquierda.name="derecha";
+
+            this.pad_abajo = this.add.image((this.fondo.width / 32) * 19.5, (this.fondo.height / 32) * 15, 'flecha').setScale(3).setAlpha(.65).setAngle(90).setScrollFactor(0).setInteractive();
+            this.pad_abajo.on('pointerdown', () => { console.log('pointover'); });
+
+            this.pad_arriba = this.add.image((this.fondo.width / 32) * 19.5, (this.fondo.height / 32) * 18, 'flecha').setScale(3).setAlpha(.65).setAngle(-90).setScrollFactor(0).setInteractive();
+            this.pad_arriba.on('pointerdown', () => { console.log('pointover'); });
+        }
+       
         function checkpoint() {
             if (check == 0) {
                 check = check + 1;
@@ -221,7 +258,7 @@ class Play extends Phaser.Scene {
             }
         }
 
-        function chocaPala() {
+        function Win() {
             this.cameras.main.startFollow(this.coche);
             var timeline = this.tweens.createTimeline();
 
@@ -248,12 +285,12 @@ class Play extends Phaser.Scene {
     update(time, delta) {
 
         if (this.life == 0) {
-            this.scene.stop('Play');
-            this.scene.start('Menu');
+            this.backgroundMusic2.stop();
+            this.scene.start('GameOver');
         }
 
         if (this.coche.body.x < 0) {
-            this.scene.stop('Play');
+            this.sound.pauseAll();
             this.scene.start('Menu');
         }
         if (this.tio.body.onFloor() || this.tio.body.touching.down) {
@@ -274,6 +311,7 @@ class Play extends Phaser.Scene {
                 this.tio.anims.play('jump', true);
                 this.tio.setSize(17, 45);
                 this.tio.setOffset(8, 20);
+                this.jump.play({volume:0.3});
             } else if ((this.cursor.down.isDown || this.abajo.isDown)) {
                 this.tio.body.setVelocityX(0);
                 this.tio.anims.play("crouch", true);
@@ -310,7 +348,12 @@ class Play extends Phaser.Scene {
         this.score2.setScrollFactor(0);
         this.lifes.setScrollFactor(0);
         this.lifes2.setScrollFactor(0);
-       
+        if ((this.cursor.up.isDown || this.salto.isDown)) {
+            this.tio.body.setVelocityY(-300);
+            this.tio.anims.play('jump', true);
+            this.tio.setSize(17, 45);
+            this.tio.setOffset(8, 20);
+        }
     }
 }
 export default Play;

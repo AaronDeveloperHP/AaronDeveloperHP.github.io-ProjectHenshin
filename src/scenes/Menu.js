@@ -4,10 +4,11 @@ class Menu extends Phaser.Scene {
     }
 
     preload() {
-        console.log('Soy Menu');
+       
     }
 
     create() {
+       
         this.backgroundMusic = this.sound.add('menu_audio', { loop: true });
         this.backgroundMusic.play({ volume: 0.5 });
 
@@ -34,27 +35,27 @@ class Menu extends Phaser.Scene {
         });
         this.input.keyboard.on('keydown_RIGHT', () => {
             this.sound.pauseAll();
-           this.scene.stop("Menu"); this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Story');
         });
         this.input.keyboard.on('keydown_LEFT', () => {
             this.sound.pauseAll();
-           this.scene.stop("Menu"); this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Story');
         });
         this.input.keyboard.on('keydown_UP', () => {
             this.sound.pauseAll();
-           this.scene.stop("Menu"); this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Story');
         });
         this.input.keyboard.on('keydown_DOWN', () => {
             this.sound.pauseAll();
-           this.scene.stop("Menu"); this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Story');
         });
         this.input.keyboard.on('keydown_ENTER', () => {
             this.sound.pauseAll();
-           this.scene.stop("Menu"); this.scene.start('Play');
+           this.scene.stop("Menu"); this.scene.start('Story');
         });
         this.input.on('pointerdown', () => {
             this.sound.pauseAll();
-           this.scene.stop("Menu"); this.scene.start('Play');
+           this.scene.start('Story');
         });
     }
 }
