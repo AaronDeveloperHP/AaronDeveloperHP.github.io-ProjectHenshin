@@ -4,8 +4,11 @@ class Play extends Phaser.Scene {
     }
 
     create() {
-
-        var mobile = {
+        this.left;
+        this.right;
+        this.duck;
+        this.up;
+        const mobile = {
             Android: function () {
                 return navigator.userAgent.match(/Android/i);
             },
@@ -198,7 +201,7 @@ class Play extends Phaser.Scene {
         //funcion que se llama al tocar una moneda
         function collect(a, b) {
             b.destroy();
-            this.money.play({volume:0.3});
+            this.money.play();
             this.score = this.score + 10;
             this.score2.setText(this.score);
 
@@ -238,18 +241,23 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.tio, this.coche, Win, null, this);
         if (mobile.any() != null) {
             this.pad_izquierda = this.add.image((this.fondo.width / 32) * 1.5, (this.fondo.height / 32) * 18, 'flecha').setScale(3).setAlpha(.65).setScrollFactor(0).setInteractive();
-            this.pad_izquierda.name="izquierda";
+            this.pad_izquierda.on('pointerover',()=>{this.left=true;});
+            this.pad_izquierda.on('pointerout',()=>{this.left=false});
 
             this.pad_derecha = this.add.image((this.fondo.width / 32) * 4, (this.fondo.height / 32) * 18, 'flecha').setScale(3).setAlpha(.65).setAngle(180).setScrollFactor(0).setInteractive();
-            this.pad_izquierda.name="derecha";
+            this.pad_derecha.on('pointerover',()=>{this.right=true;});
+            this.pad_derecha.on('pointerout',()=>{this.right=false});
 
-            this.pad_abajo = this.add.image((this.fondo.width / 32) * 19.5, (this.fondo.height / 32) * 15, 'flecha').setScale(3).setAlpha(.65).setAngle(90).setScrollFactor(0).setInteractive();
-            this.pad_abajo.on('pointerdown', () => { console.log('pointover'); });
+            this.pad_abajo = this.add.image((this.fondo.width / 32) * 19.5, (this.fondo.height / 32) * 18, 'flecha').setScale(3).setAlpha(.65).setAngle(-90).setScrollFactor(0).setInteractive();
+            this.pad_abajo.on('pointerover',()=>{this.duck=true;});
+            this.pad_abajo.on('pointerout',()=>{this.duck=false});
 
-            this.pad_arriba = this.add.image((this.fondo.width / 32) * 19.5, (this.fondo.height / 32) * 18, 'flecha').setScale(3).setAlpha(.65).setAngle(-90).setScrollFactor(0).setInteractive();
-            this.pad_arriba.on('pointerdown', () => { console.log('pointover'); });
+            this.pad_arriba = this.add.image((this.fondo.width / 32) * 19.5, (this.fondo.height / 32) * 15, 'flecha').setScale(3).setAlpha(.65).setAngle(90).setScrollFactor(0).setInteractive();
+            this.pad_arriba.on('pointerover',()=>{this.up=true;});
+            this.pad_arriba.on('pointerout',()=>{this.up=false});
+           
         }
-       
+      
         function checkpoint() {
             if (check == 0) {
                 check = check + 1;
@@ -283,7 +291,8 @@ class Play extends Phaser.Scene {
 
 
     update(time, delta) {
-
+        console.log(this.left);
+     
         if (this.life == 0) {
             this.backgroundMusic2.stop();
             this.scene.start('GameOver');
@@ -294,25 +303,25 @@ class Play extends Phaser.Scene {
             this.scene.start('Menu');
         }
         if (this.tio.body.onFloor() || this.tio.body.touching.down) {
-            if ((this.cursor.left.isDown || this.izquierda.isDown)) {
+            if ((this.cursor.left.isDown || this.izquierda.isDown)||this.left) {
                 this.tio.body.setVelocityX(-210);
                 this.tio.flipX = true;
                 this.tio.anims.play('walk', true);
                 this.tio.setSize(17, 45);
                 this.tio.setOffset(8, 20);
-            } else if ((this.cursor.right.isDown || this.derecha.isDown)) {
+            } else if ((this.cursor.right.isDown || this.derecha.isDown)||this.right) {
                 this.tio.body.setVelocityX(210);
                 this.tio.flipX = false;
                 this.tio.anims.play('walk', true);
                 this.tio.setSize(17, 45);
                 this.tio.setOffset(8, 20);
-            } else if ((this.cursor.up.isDown || this.salto.isDown)) {
+            } else if ((this.cursor.up.isDown || this.salto.isDown)||this.up) {
                 this.tio.body.setVelocityY(-300);
                 this.tio.anims.play('jump', true);
                 this.tio.setSize(17, 45);
                 this.tio.setOffset(8, 20);
-                this.jump.play({volume:0.3});
-            } else if ((this.cursor.down.isDown || this.abajo.isDown)) {
+                this.jump.play();
+            } else if ((this.cursor.down.isDown || this.abajo.isDown)||this.duck) {
                 this.tio.body.setVelocityX(0);
                 this.tio.anims.play("crouch", true);
                 this.tio.setSize(17, 30);
@@ -324,12 +333,12 @@ class Play extends Phaser.Scene {
                 this.tio.setOffset(8, 20);
             }
         } else {
-            if ((this.cursor.left.isDown || this.izquierda.isDown)) {
+            if ((this.cursor.left.isDown || this.izquierda.isDown)||this.left) {
                 this.tio.body.setVelocityX(-210);
                 this.tio.flipX = true;
                 this.tio.anims.play('fall', true);
 
-            } else if ((this.cursor.right.isDown || this.derecha.isDown)) {
+            } else if ((this.cursor.right.isDown || this.derecha.isDown)||this.right) {
                 this.tio.body.setVelocityX(210);
                 this.tio.flipX = false;
                 this.tio.anims.play('fall', true);
@@ -354,6 +363,11 @@ class Play extends Phaser.Scene {
             this.tio.setSize(17, 45);
             this.tio.setOffset(8, 20);
         }
+        
     }
-}
+    andar(){
+      return true;
+        }
+        
+    }
 export default Play;
