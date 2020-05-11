@@ -19,6 +19,9 @@ class Bootloader extends Phaser.Scene {
         this.load.image('ascensor', 'Plataformas/ascensor.png')
         this.load.image("tileset","Plataformas/Tileset_32x32.png");
         this.load.image("checkpoint","Plataformas/checkpoint.png");
+        this.load.image('tablero', 'Iconos/tablero.png');
+        this.load.image('tabla', 'Iconos/menu_tabla.png');
+        
         this.load.tilemapTiledJSON("mapa","Plataformas/Nivel_1.json");
          this.load.spritesheet("coche","Jugador/coche.png",{
             frameWidth:163,
