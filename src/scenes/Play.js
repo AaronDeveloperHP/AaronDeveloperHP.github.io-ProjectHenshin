@@ -240,19 +240,19 @@ class Play extends Phaser.Scene {
 
         this.physics.add.collider(this.tio, this.coche, Win, null, this);
         if (mobile.any() != null) {
-            this.pad_izquierda = this.add.image((this.fondo.width / 32) * 1.5, (this.fondo.height / 32) * 18, 'flecha').setScale(3).setAlpha(.65).setScrollFactor(0).setInteractive();
+            this.pad_izquierda = this.add.image((this.fondo.width / 32) * 1.7, (this.fondo.height / 32) * 18, 'flecha').setScale(4).setAlpha(.65).setScrollFactor(0).setInteractive();
             this.pad_izquierda.on('pointerover',()=>{this.left=true;});
             this.pad_izquierda.on('pointerout',()=>{this.left=false});
 
-            this.pad_derecha = this.add.image((this.fondo.width / 32) * 4, (this.fondo.height / 32) * 18, 'flecha').setScale(3).setAlpha(.65).setAngle(180).setScrollFactor(0).setInteractive();
+            this.pad_derecha = this.add.image((this.fondo.width / 32) * 5, (this.fondo.height / 32) * 18, 'flecha').setScale(4).setAlpha(.65).setAngle(180).setScrollFactor(0).setInteractive();
             this.pad_derecha.on('pointerover',()=>{this.right=true;});
             this.pad_derecha.on('pointerout',()=>{this.right=false});
 
-            this.pad_abajo = this.add.image((this.fondo.width / 32) * 19.5, (this.fondo.height / 32) * 18, 'flecha').setScale(3).setAlpha(.65).setAngle(-90).setScrollFactor(0).setInteractive();
+            this.pad_abajo = this.add.image((this.fondo.width / 32) * 19.5, (this.fondo.height / 32) * 18, 'flecha').setScale(4).setAlpha(.65).setAngle(-90).setScrollFactor(0).setInteractive();
             this.pad_abajo.on('pointerover',()=>{this.duck=true;});
             this.pad_abajo.on('pointerout',()=>{this.duck=false});
 
-            this.pad_arriba = this.add.image((this.fondo.width / 32) * 19.5, (this.fondo.height / 32) * 15, 'flecha').setScale(3).setAlpha(.65).setAngle(90).setScrollFactor(0).setInteractive();
+            this.pad_arriba = this.add.image((this.fondo.width / 32) * 19.5, (this.fondo.height / 32) * 13.8, 'flecha').setScale(4).setAlpha(.65).setAngle(90).setScrollFactor(0).setInteractive();
             this.pad_arriba.on('pointerover',()=>{this.up=true;});
             this.pad_arriba.on('pointerout',()=>{this.up=false});
            
