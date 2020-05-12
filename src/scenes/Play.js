@@ -357,12 +357,12 @@ class Play extends Phaser.Scene {
         this.score2.setScrollFactor(0);
         this.lifes.setScrollFactor(0);
         this.lifes2.setScrollFactor(0);
-        if ((this.cursor.up.isDown || this.salto.isDown)) {
+      /*   if ((this.cursor.up.isDown || this.salto.isDown)) {
             this.tio.body.setVelocityY(-300);
             this.tio.anims.play('jump', true);
             this.tio.setSize(17, 45);
             this.tio.setOffset(8, 20);
-        }
+        } */
         
     }
     andar(){
