@@ -305,7 +305,7 @@ class Play extends Phaser.Scene {
      
         if (this.life == 0) {
             this.sound.pauseAll();
-            this.scene.start('GameOver');
+            this.scene.start('YouWin');
         }
 
         if (this.coche.body.x < 0) {
