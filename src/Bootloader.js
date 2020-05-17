@@ -116,6 +116,7 @@ class Bootloader extends Phaser.Scene {
         this.load.audio('salto', 'Audio/salto.wav');
         this.load.audio('moneda', 'Audio/moneda_sonido.wav');
         this.load.audio('death', 'Audio/musica_gameOver.mp3');
+        this.load.audio('victoria', 'Audio/victoria.mp3');
         this.load.audio('historia', 'Audio/musica_story.mp3');
 
         this.load.spritesheet('tio','Jugador/sprite_tio.png',{
