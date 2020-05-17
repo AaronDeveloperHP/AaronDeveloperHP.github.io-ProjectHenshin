@@ -21,7 +21,7 @@ class Menu extends Phaser.Scene {
             225, 'pixel', 'PROYECTO AJ', 30).setOrigin(0.5);
 
         const pressButton = this.add.dynamicBitmapText(this.sys.game.config.width / 2,
-            475, 'pixel', 'PRESIONE CUALQUIER BOTON', 22).setOrigin(0.5);
+            475, 'pixel', 'PRESS ANY BUTTON', 22).setOrigin(0.5);
 
         this.add.image(750, 550, 'marca').setScale(0.5);
 
