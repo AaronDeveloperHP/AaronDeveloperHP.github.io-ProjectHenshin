@@ -5,6 +5,7 @@ import Story from './scenes/Story.js';
 import Story2 from './scenes/Story2.js';
 import Controls from './scenes/Controls.js';
 import GameOver from './scenes/GameOver.js';
+import YouWin from './scenes/YouWin.js';
 const config = {
     title: "primeraPrueba",
     version: "0.0.1",
@@ -34,7 +35,8 @@ const config = {
         Story2,
         Controls,
         Play,
-        GameOver
+        GameOver,
+        YouWin
     ]
 };
 
