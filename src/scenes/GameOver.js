@@ -8,6 +8,7 @@ class GameOver extends Phaser.Scene {
     // }
 
     create() {
+        this.laserGO = this.sound.add('laser', { loop: false });
         this.muerte = this.sound.add('death', { loop: false });
         this.muerte.play( { volume: 0.5 } );
 
@@ -16,19 +17,16 @@ class GameOver extends Phaser.Scene {
         this.add.image(400, 300, 'fatality').setScale(0.65);
 
         this.add.dynamicBitmapText(this.sys.game.config.width / 2,
-            150, 'pixel', 'GAME OVER', 75).setOrigin(0.5);
-
-        this.add.dynamicBitmapText(this.sys.game.config.width / 2,
-            400, 'pixel', 'YOU LOSE', 50).setOrigin(0.5);
+            150, 'pixel', 'GAME OVER', 85).setOrigin(0.5);
 
         // console.log('El titulo también.');
 
         this.evento = setTimeout(() => {
             this.salirEscena()
-        }, 6000);
+        }, 4000);
 
         this.input.keyboard.on('keydown_ENTER', () => {
-            this.salirEscena();
+            this.salirEscena()
         });
 
         this.input.on('pointerdown', () => {
@@ -37,6 +35,8 @@ class GameOver extends Phaser.Scene {
     }
     salirEscena() {
         clearTimeout(this.evento);
+        this.sound.pauseAll();
+        this.laserGO.play();
         this.scene.stop('GameOver');
         this.scene.start('Menu');
     }

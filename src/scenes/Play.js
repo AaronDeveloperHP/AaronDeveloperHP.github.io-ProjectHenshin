@@ -8,6 +8,7 @@ class Play extends Phaser.Scene {
         this.right;
         this.duck;
         this.up;
+
         const mobile = {
             Android: function () {
                 return navigator.userAgent.match(/Android/i);
@@ -26,8 +27,8 @@ class Play extends Phaser.Scene {
             }
         }
 
+        // Animaciones
 
-        //Animaciones
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNumbers('tio', { start: 1, end: 6 }),
@@ -76,7 +77,10 @@ class Play extends Phaser.Scene {
             frameRate: 8,
             repeat: -1
         });
+
         this.fondo = this.add.image(0, -2345, 'nivel').setScale(3.15).setOrigin(0, 0);
+
+        this.laserPlay = this.sound.add('laser', { loop: false });
         this.backgroundMusic2 = this.sound.add('fondo', { loop: true });
         this.backgroundMusic2.play({ volume: 0.5 });
         this.money = this.sound.add('moneda', { loop: false });
@@ -87,6 +91,7 @@ class Play extends Phaser.Scene {
         const mapa = this.make.tilemap({ key: 'mapa' });
         const tiles = mapa.addTilesetImage("tileset");
         const layer = mapa.createDynamicLayer(0, tiles, 0, -2282).setScale(1.5);
+
         layer.setCollisionBetween(1, 14);
         layer.setCollisionBetween(16, 24);
         layer.setCollisionBetween(26, 29);
@@ -94,13 +99,16 @@ class Play extends Phaser.Scene {
 
         this.physics.world.setBounds(0, -2345, this.fondo.width * 3.15, this.fondo.height * 3.15);
 
-        this.tio = this.physics.add.sprite(70, 250, 'tio', 0).setCollideWorldBounds(true).setScale(2);
+        this.tio = this.physics.add.sprite(70, 485, 'tio', 0).setCollideWorldBounds(true).setScale(2);
         this.coche = this.physics.add.sprite(3160, -1500, "coche").setScale(2).setImmovable(true);
+
         this.physics.add.collider(this.tio, layer);
         this.physics.add.collider(this.coche, layer);
 
-        //Monedas
+        // Monedas
+
         this.coinsGroup = this.physics.add.staticGroup();
+
         layer.forEachTile(tile => {
             if (tile.index == 34) {
                 const x = tile.getCenterX();
@@ -111,9 +119,11 @@ class Play extends Phaser.Scene {
                 tile.setCollision(true);
             }
         });
+
         this.physics.add.overlap(this.tio, this.coinsGroup, collect, null, this);
 
-        //Pinchos de suelo
+        // Pinchos de suelo
+
         this.spikeGroup = this.physics.add.staticGroup();
         layer.forEachTile(tile => {
             if (tile.index == 35) {
@@ -126,7 +136,8 @@ class Play extends Phaser.Scene {
             }
         });
 
-        //Pinchos de techo
+        // Pinchos de techo
+
         layer.forEachTile(tile => {
             if (tile.index == 36) {
                 var x = tile.getCenterX();
@@ -137,9 +148,13 @@ class Play extends Phaser.Scene {
                 spike.setScale(1.5);
             }
         });
+        
         this.physics.add.collider(this.tio, this.spikeGroup, damage, null, this);
-        //Plataformas moviles horizontales
+
+        // Plataformas moviles horizontales
+
         this.movibleX = this.physics.add.group();
+
         layer.forEachTile(tile => {
             if (tile.index == 13) {
                 var x = tile.getCenterX();
@@ -155,10 +170,13 @@ class Play extends Phaser.Scene {
                 tile.setCollision(true);
             }
         });
+
         this.physics.add.collider(this.tio, this.movibleX);
 
-        //Plataformas moviles verticales
+        // Plataformas moviles verticales
+
         this.movibleY = this.physics.add.group();
+
         layer.forEachTile(tile => {
             if (tile.index == 24) {
                 var x = tile.getCenterX();
@@ -176,7 +194,8 @@ class Play extends Phaser.Scene {
         });
         this.physics.add.collider(this.tio, this.movibleY);
 
-        //funcion que se llama al tocar un pincho
+        // Función que se llama al tocar un pincho
+
         this.life = 3;
         function damage(a, b) {
             this.cosa = this.life;
@@ -189,34 +208,30 @@ class Play extends Phaser.Scene {
                         a.x = 70;
                         a.y = 400;
                     }
-
                 }
             });
+
             this.life = this.cosa - 1;
-
-
             this.lifes2.setText(this.life);
-
         }
-        //funcion que se llama al tocar una moneda
+        // Funcion que se llama al tocar una moneda
         function collect(a, b) {
             b.destroy();
             this.money.play();
             this.score = this.score + 10;
             this.score2.setText(this.score);
-
-
         }
+        
         this.cameras.main.setBounds(0, -2345, 1216 * 3.15, 935 * 3.15);
         this.cameras.main.startFollow(this.tio, true, 0.05, 0.05);
-        this.scoreText = this.add.dynamicBitmapText(10, 7, 'pixel', 'PUNTOS', 25);
+        this.tablaMenu = this.add.image(this.sys.game.config.width / 2, 25,'tablero').setOrigin(0.5)
+            .setScale(2.5);
+        this.scoreText = this.add.dynamicBitmapText(25, 14, 'pixel', 'POINTS', 25);
         this.score = 0;
+        this.score2 = this.add.dynamicBitmapText(200, 14, 'pixel', this.score, 25);
 
-        this.lifes = this.add.dynamicBitmapText(550, 7, 'pixel', 'VIDAS', 25);
-        this.lifes2 = this.add.dynamicBitmapText(700, 7, 'pixel', this.life, 25);
-        this.score2 = this.add.dynamicBitmapText(180, 7, 'pixel', this.score, 25);
-
-
+        this.lifes = this.add.dynamicBitmapText(600, 14, 'pixel', 'LIFES', 25);
+        this.lifes2 = this.add.dynamicBitmapText(750, 14, 'pixel', this.life, 25);
 
         /* Ahora gracias a un método que tiene Phaser,
         se crean los cursores esenciales (up, down, right, left)*/
@@ -226,17 +241,11 @@ class Play extends Phaser.Scene {
         this.abajo = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.salto = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.izquierda = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        this.sonidoOff = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);
-        this.sonidoOn = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N);
-        this.volumeUp = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
-        this.volumeDown = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-
-
 
         this.tio.setSize(17, 45);
         this.tio.setOffset(8, 20);
-        this.coche.setSize(20, 45);
-        this.coche.setOffset(70, 15);
+        this.coche.setSize(10, 45);
+        this.coche.setOffset(75, 16);
 
         this.physics.add.collider(this.tio, this.coche, Win, null, this);
         if (mobile.any() != null) {
@@ -289,12 +298,13 @@ class Play extends Phaser.Scene {
         };
     }
 
-
+  
     update(time, delta) {
-        console.log(this.left);
+        
+        // console.log(this.left);
      
         if (this.life == 0) {
-            this.backgroundMusic2.stop();
+            this.sound.pauseAll();
             this.scene.start('GameOver');
         }
 
@@ -347,27 +357,21 @@ class Play extends Phaser.Scene {
                 this.tio.setVelocityX(0);
             }
         }
-        if (this.sonidoOff.isDown) {
-            this.sound.pauseAll();
-        }
-        if (this.sonidoOn.isDown) {
-            this.sound.resumeAll();
-        }
+
         this.scoreText.setScrollFactor(0);
         this.score2.setScrollFactor(0);
         this.lifes.setScrollFactor(0);
         this.lifes2.setScrollFactor(0);
-      /*   if ((this.cursor.up.isDown || this.salto.isDown)) {
-            this.tio.body.setVelocityY(-300);
-            this.tio.anims.play('jump', true);
-            this.tio.setSize(17, 45);
-            this.tio.setOffset(8, 20);
-        } */
+        this.tablaMenu.setScrollFactor(0);
+
+    //   if ((this.cursor.up.isDown || this.salto.isDown)) {
+    //         this.tio.body.setVelocityY(-300);
+    //         this.tio.anims.play('jump', true);
+    //         this.tio.setSize(17, 45);
+    //         this.tio.setOffset(8, 20);
+    //     }
         
     }
-    andar(){
-      return true;
-        }
         
     }
 export default Play;
