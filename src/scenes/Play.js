@@ -305,12 +305,12 @@ class Play extends Phaser.Scene {
      
         if (this.life == 0) {
             this.sound.pauseAll();
-            this.scene.start('YouWin');
+            this.scene.start('GameOver');
         }
 
         if (this.coche.body.x < 0) {
             this.sound.pauseAll();
-            this.scene.start('Menu');
+            this.scene.start('YouWin');
         }
         if (this.tio.body.onFloor() || this.tio.body.touching.down) {
             if ((this.cursor.left.isDown || this.izquierda.isDown)||this.left) {
