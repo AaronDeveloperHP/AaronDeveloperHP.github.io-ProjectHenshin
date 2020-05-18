@@ -51,7 +51,7 @@ class Menu extends Phaser.Scene {
         });
         this.input.keyboard.on('keydown_ENTER', () => {
             this.sound.pauseAll();
-           this.scene.stop("Menu"); this.scene.start('Form');
+           this.scene.stop("Menu"); this.scene.start('Story');
         });
         this.input.on('pointerdown', () => {
             this.sound.pauseAll();
